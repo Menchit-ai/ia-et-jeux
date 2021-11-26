@@ -20,6 +20,28 @@ def uniform_cost_search(problem):
     """
 
     # *** YOUR CODE HERE *** #
+    frontier = PriorityQueue()
+    start = problem.getStartState()
+    frontier.push(start, 0)
+    
+    explored = {}
+    explored[start] = (None, None)
+
+    past = {}
+    past[start] = 0
+
+    while not frontier.isEmpty():
+        state = frontier.pop()
+        if problem.isGoalState(state): break
+        for successor, action, cost in problem.getSuccessors(state):
+            new_cost = past[state] + cost
+            if successor not in explored or new_cost < past[successor]:
+                priority = new_cost
+                frontier.update(successor, priority)
+                explored[successor] = (state, action)
+                past[successor] = new_cost
+
+
     return []
 
 
