@@ -45,6 +45,7 @@ def food_heuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
+    if problem.isGoalState(state): return 0
     distances = []
     food = foodGrid.asList()
     for f in food:

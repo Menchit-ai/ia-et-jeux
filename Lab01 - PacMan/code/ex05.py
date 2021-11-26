@@ -17,6 +17,7 @@ def corners_heuristic(state, problem):
     "*** YOUR CODE HERE ***"
     distances = []
     xy1, food = state
+    if problem.isGoalState(state): return 0
     for food_eaten, coord in zip(food,corners):
       if not food_eaten : distances.append(abs(xy1[0] - coord[0]) + abs(xy1[1] - coord[1]))
     return sum(distances)

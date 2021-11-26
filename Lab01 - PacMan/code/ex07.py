@@ -37,7 +37,7 @@ class AnyFoodSearchProblem(PositionSearchProblem):
         """
         x, y = state
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return state in self.food.asList()
 
 
 class ClosestDotSearchAgent(Agent):
