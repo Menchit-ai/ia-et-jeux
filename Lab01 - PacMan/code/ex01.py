@@ -32,7 +32,7 @@ def breadth_first_search(problem):
             if not successor in explored:
                 frontier.push(successor)
                 explored[successor] = (state, action)
-    return []
+    return path_reconstruction(start, state, explored)
 
 
 def path_reconstruction(start, goal, explored):

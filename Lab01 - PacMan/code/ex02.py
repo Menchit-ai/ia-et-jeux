@@ -42,7 +42,7 @@ def uniform_cost_search(problem):
                 past[successor] = new_cost
 
 
-    return []
+    return path_reconstruction(start, state, explored)
 
 
 if __name__ == '__main__':

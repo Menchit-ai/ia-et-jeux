@@ -72,16 +72,16 @@ class CornersSearchProblem(SearchProblem):
 
             "*** YOUR CODE HERE ***"
             x,y = state[0]
-            food = state[1]
+            food = list(state[1])
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
             if not self.walls[nextx][nexty]:
-                nextState = (nextx, nexty)
+                nextPosition = (nextx, nexty)
 
-                if nextState in self.corners:
-                    list(food)[self.corners.index(nextState)] = True
+                if nextPosition in self.corners:
+                    food[self.corners.index(nextPosition)] = True
 
-                nextState = (nextState, tuple(food))
+                nextState = (nextPosition, tuple(food))
                 successors.append( ( nextState, action, 1) )
 
         self._expanded += 1 # DO NOT CHANGE

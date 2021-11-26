@@ -46,7 +46,7 @@ def astar_search(problem, heuristic=lambda s, p: 0):
                 explored[successor] = (state, action)
                 past[successor] = new_cost
 
-    return []
+    return path_reconstruction(start, state, explored)
 
 
 if __name__ == '__main__':
