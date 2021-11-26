@@ -45,7 +45,12 @@ def food_heuristic(state, problem):
     """
     position, foodGrid = state
     "*** YOUR CODE HERE ***"
-    return 0
+    distances = []
+    food = foodGrid.asList()
+    for f in food:
+        distances.append(lazy_maze_distance(position, f, problem))
+
+    return sum(distances)
 
 
 if __name__ == '__main__':
