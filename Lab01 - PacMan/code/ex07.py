@@ -47,7 +47,7 @@ class ClosestDotSearchAgent(Agent):
     THERE IS NOTHING TO CHANGE HERE.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, segment, problem, costFn):
         self.index = 0
 
     def registerInitialState(self, state):

@@ -51,7 +51,7 @@ def food_heuristic(state, problem):
     for f in food:
         distances.append(lazy_maze_distance(position, f, problem))
 
-    return sum(distances)
+    return max(distances)
 
 
 if __name__ == '__main__':
