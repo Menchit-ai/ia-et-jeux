@@ -27,14 +27,12 @@ def breadth_first_search(problem):
 
     while not frontier.isEmpty():
         state = frontier.pop()
-        if problem.isGoalState(state): 
-            return explored
-        for successor in problem.getSuccessors(state):
-            successor_state = successor[0]
-            if not successor_state in explored:
-                frontier.push(successor_state)
-                explored[successor_state] = (state,successor[1])
-    return explored
+        if problem.isGoalState(state): break
+        for successor, action, cost in problem.getSuccessors(state):
+            if not successor in explored:
+                frontier.push(successor)
+                explored[successor] = (state, action)
+    return []
 
 
 def path_reconstruction(start, goal, explored):
@@ -51,5 +49,5 @@ def path_reconstruction(start, goal, explored):
 if __name__ == '__main__':
     import os
     os.system('python -m pacman -a SearchAgent -s breadth_first_search -l tinyMaze')
-    # os.system('python -m pacman -a SearchAgent -s breadth_first_search -l mediumMaze')
-    # os.system('python -m pacman -a SearchAgent -s breadth_first_search -l bigMaze -z 0.5')
+    os.system('python -m pacman -a SearchAgent -s breadth_first_search -l mediumMaze')
+    os.system('python -m pacman -a SearchAgent -s breadth_first_search -l bigMaze -z 0.5')
