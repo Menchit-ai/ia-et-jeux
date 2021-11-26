@@ -15,7 +15,11 @@ def corners_heuristic(state, problem):
     walls = problem.walls  # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
-    return 0
+    distances = []
+    xy1, food = state
+    for food_eaten, coord in zip(food,corners):
+      if not food_eaten : distances.append(abs(xy1[0] - coord[0]) + abs(xy1[1] - coord[1]))
+    return sum(distances)
 
 
 if __name__ == '__main__':

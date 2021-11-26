@@ -43,7 +43,8 @@ def path_reconstruction(start, goal, explored):
         predecessor, action = explored[current_state]
         path.append(action)
         current_state = predecessor
-    return path.reverse()
+    path.reverse()
+    return path
 
 
 if __name__ == '__main__':
