@@ -34,6 +34,4 @@ def value_iteration(mdp, discount, iterations):
                     q += prob * (R + discount * v_table[next_state])
                 q_table[state][action] = q
 
-
-
     return q_table
