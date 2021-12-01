@@ -1,0 +1,42 @@
+Q-Values at iteration 100 for action 'north' are NOT correct.   Student solution:
+	q_values_k_100_action_north: """
+           illegal
+            0.0175
+           illegal
+"""
+
+   Correct solution:
+	q_values_k_100_action_north: """
+           illegal
+           -0.4534
+           illegal
+"""
+
+Q-Values at iteration 100 for action 'west' are NOT correct.   Student solution:
+	q_values_k_100_action_west: """
+           illegal
+            0.6653
+           illegal
+"""
+
+   Correct solution:
+	q_values_k_100_action_west: """
+           illegal
+            0.3919
+           illegal
+"""
+
+Values are NOT correct.   Student solution:
+	values: """
+            0.0000
+            2.1267
+            9.8175
+"""
+
+   Correct solution:
+	values: """
+           -9.4767
+            2.1267
+            9.8175
+"""
+
