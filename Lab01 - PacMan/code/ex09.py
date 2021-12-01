@@ -10,24 +10,24 @@ def mdp_parameters(type):
      d)	Prefer the distant exit (+10), avoiding the cliff (-10).
     """
     if type == 'a':
-        discount = None
-        noise = None
-        reward = None
+        discount = 0.1
+        noise = 0
+        reward = 0.1
 
     elif type == 'b':
-        discount = None
-        noise = None
-        reward = None
+        discount = 0.2
+        noise = 0.2
+        reward = 0.5
 
     elif type == 'c':
-        discount = None
-        noise = None
-        reward = None
+        discount = 0.1
+        noise = 0
+        reward = 1
 
     elif type == 'd':
-        discount = None
-        noise = None
-        reward = None
+        discount = 0.1
+        noise = 0.1
+        reward = 1
 
     return discount, noise, reward
 
