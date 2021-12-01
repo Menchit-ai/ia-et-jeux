@@ -17,25 +17,22 @@ def value_iteration(mdp, discount, iterations):
     q_table = defaultdict(lambda: defaultdict(float))  # dict of dicts with default 0
     v_table = defaultdict(float)
 
-    for k in range(iterations):
-        "*** YOUR CODE HERE ***"
-
-        for _ in range(iterations):
-            for state in mdp.getStates():
-                if mdp.isTerminal(state): v_table[state] = 0
-                else :
-                    max = -1
-                    for action in mdp.getPossibleActions(state):
-                        if q_table[state][action] > max : max = q_table[state][action]
-                    v_table[state] = max
-
-            for state in mdp.getStates():
+    for _ in range(iterations):
+        for state in mdp.getStates():
+            if mdp.isTerminal(state): v_table[state] = 0
+            else :
+                max = -1
                 for action in mdp.getPossibleActions(state):
-                    q = 0
-                    for next_state, prob in mdp.getTransitionStatesAndProbs(state,action):
-                        R = mdp.getReward(state, action, next_state)
-                        q += prob * (R + discount * v_table[next_state])
-                    q_table[state][action] = q
+                    if q_table[state][action] > max : max = q_table[state][action]
+                v_table[state] = max
+
+        for state in mdp.getStates():
+            for action in mdp.getPossibleActions(state):
+                q = 0
+                for next_state, prob in mdp.getTransitionStatesAndProbs(state,action):
+                    R = mdp.getReward(state, action, next_state)
+                    q += prob * (R + discount * v_table[next_state])
+                q_table[state][action] = q
 
 
 
