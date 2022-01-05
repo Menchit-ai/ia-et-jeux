@@ -43,7 +43,7 @@ for t in range(5):
   k = 0.2                
   print("=============================================")
   # gradient descent algorithm 
-  for i in range(20):
+  for i in range(50):
                 
       # exercice : creez deux fonctions correspondant aux dérivées partielles de g(x,y)
       # appliquez la descente du gradient

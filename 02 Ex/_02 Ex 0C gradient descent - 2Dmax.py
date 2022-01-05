@@ -9,7 +9,7 @@ random.seed(datetime.now())
 # change it from "Inline/En ligne" to "Automatic".
  
 cm = plt.cm.RdBu
- 
+
 
 #draw function g
 def drawFunction(minn,maxx):
@@ -50,15 +50,29 @@ for t in range(5):
   
   print("=============================================")
   # gradient descent algorithm 
-  for i in range(20):
-                  
-      x +=  k  
-      y +=  0          
-      print(g(x,y))
+  for i in range(50):
     
-      plt.scatter(x, y,  s=50, c= color[t] ,  marker='x')
+    v1dx = 2*x
+    v1dy = 0.8*y
+
+    v2dx = 3
+    v2dy = 2
+
+    v1 = x*x + 0.4*y*y + 0.1
+    v2 = 3 * x + 2 * y + 0.2
+
+    if v1 > v2:
+      x -= k * v1dx  
+      y -= k * v1dy
+    else:
+      x -= k * v2dx
+      y -= k * v2dy
+
+    print(g(x,y))
   
-      plt.pause(0.05) # 0.1second between each iteration, usefull for nice animation
+    plt.scatter(x, y,  s=50, c= color[t] ,  marker='x')
+
+    plt.pause(0.05) # 0.1second between each iteration, usefull for nice animation
   
 plt.show() # wait for windows close event
 

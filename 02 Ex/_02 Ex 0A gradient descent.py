@@ -29,13 +29,15 @@ pas = 0.1
 
 for i in range(100):
 
-    x -= pas   # à modifier
+  # créer la fonction g'(x)
+  g_p = lambda x: 2*x / 5 - 0.4
 
-    # créer la fonction g'(x)
-    # appliquez la descente du gradient
+  x -= pas * g_p(x)   # à modifier
+
+  # appliquez la descente du gradient
 
 
-    plt.scatter(x, g(x),  s=50, c='red',  marker='x')
-    plt.pause(0.1) # 0.1second between each iteration, usefull for nice animation
+  plt.scatter(x, g(x),  s=50, c='red',  marker='x')
+  plt.pause(0.1) # 0.1second between each iteration, usefull for nice animation
 
 plt.show()
