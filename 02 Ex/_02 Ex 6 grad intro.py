@@ -28,7 +28,8 @@ import torch
 # Pour forcer les tenseurs à utiliser des nombres flotants,
 # nous utilisons la syntaxe suivante :
 
-x = torch.FloatTensor([ 4,  6,  1 , 3 ])
+x = torch.FloatTensor([ 4,  6,  1,  3 ])
+y = torch.FloatTensor([ 2, -3,  1,  3 ])
 
 # pour créer notre paramètre d'apprentissage et préciser que pytorch
 # devra gérer son calcul de gradient, nous écrivons :
@@ -44,22 +45,40 @@ a.requires_grad = True
 # Les fonctions mathématiques sur les tenseurs s'utilisent ainsi :
 # torch.abs(..) / torch.min(..)  / torch.sum(..)  ...
 
-# Passe BACKWARD :
-# Lorsque le calcul de la passe Forward est terminé,
-# nous devons lancer la passe Backward pour calculer le gradient.
-# Le calcul du gradient est déclenché par la syntaxe :
+# def f(a,xi,yi) : return torch.min(torch.FloatTensor([a*torch.abs(xi-yi),1]))
 
-# tenseur_erreur_totale.backward()
+def f(a,xi,yi) : return torch.min(a*torch.abs(xi-yi), torch.ones(xi.shape))
+def error(a,xi,yi,ref): return (f(a,xi,yi) - ref)**2
 
-# GRADIENT DESCENT :
-# Effectuez la méthode de descente du gradient pour modifier la valeur
-# du paramètre d'apprentissage a. Etrangement, il faut préciser à Pytorch
-# d'arrêter de calculer le gradient de a en utilisant la syntaxe ci-après.
-# De plus, il faut réinitialiser le gradient de a à zéro manuellement :
+for i in range(100):
+    xi = x.reshape(-1, 1)
+    yi = y.reshape(-1, 1)
 
-#  with torch.no_grad() :
-#     a -= ??? *  a.grad
-#     a.grad.zero_()
+    ref = torch.FloatTensor([1, 1, 0, 0]).reshape(-1,1)
+    # response = f(a,xi,yi)
+    errors = error(a,xi,yi,ref)
 
+    # Passe BACKWARD :
+    # Lorsque le calcul de la passe Forward est terminé,
+    # nous devons lancer la passe Backward pour calculer le gradient.
+    # Le calcul du gradient est déclenché par la syntaxe :
 
-# A chaque itération, affichez la valeur de a et de l'erreur totale
+    tenseur_erreur_totale = torch.sum(errors)
+    tenseur_erreur_totale.backward()
+
+    # A chaque itération, affichez la valeur de a et de l'erreur totale
+    print("Erreur totale", tenseur_erreur_totale.data)
+    print("Valeur de a", a.data)
+
+    # GRADIENT DESCENT :
+    # Effectuez la méthode de descente du gradient pour modifier la valeur
+    # du paramètre d'apprentissage a. Etrangement, il faut préciser à Pytorch
+    # d'arrêter de calculer le gradient de a en utilisant la syntaxe ci-après.
+    # De plus, il faut réinitialiser le gradient de a à zéro manuellement :
+    step = 0.1
+    with torch.no_grad() :
+        a -= step *  a.grad
+        a.grad.zero_()
+
+    
+print("Réponse finale", f(a,xi,yi))
