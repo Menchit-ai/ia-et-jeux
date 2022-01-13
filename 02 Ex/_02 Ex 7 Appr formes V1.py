@@ -1,6 +1,7 @@
-import numpy as np
-import matplotlib.pyplot as plt
 import random
+
+import matplotlib.pyplot as plt
+import numpy as np
 import torch
 import torch.nn.functional as FNT
 
@@ -36,7 +37,6 @@ def DessinePoints():
 
 XXXX , YYYY = np.meshgrid(np.arange(-1, 1, 0.01), np.arange(-1, 1, 0.01))
 
-
 ##############################################################
 #
 #  PROJET
@@ -46,8 +46,9 @@ XXXX , YYYY = np.meshgrid(np.arange(-1, 1, 0.01), np.arange(-1, 1, 0.01))
 # Pour chaque échantillon, nous avons comme information [(x,y),cat]
 
 # Construisez une couche Linear pour un échantillon prédit un score pour chaque catégorie
-
+layer = torch.nn.Linear(2,3)
 # Le plus fort score est associé à la catégorie retenue
+get_cat = lambda x: torch.argmax(x, axis=2)
 # Pour calculer l'erreur, on connait la bonne catégorie k de l'échantillon de l'échantillon.
 # On calcule Err = Sigma_(j=0 à nb_cat) max(0,Sj-Sk)  avec Sj score de la cat j
 
@@ -65,15 +66,52 @@ XXXX , YYYY = np.meshgrid(np.arange(-1, 1, 0.01), np.arange(-1, 1, 0.01))
 
 def ComputeCatPerPixel():
     s = XXXX.shape
-    CCCC = torch.ones(s)
+    T = torch.stack((torch.FloatTensor(XXXX), torch.FloatTensor(YYYY)), 2)
+    scores = model(T)
+    CCCC = get_cat(scores)
     return CCCC
 
-iteration = 0
+class Net(torch.nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+        self.layer = torch.nn.Linear(2,3)
 
-DessineFond()
-DessinePoints()
+    def forward(self, x):
+        scores = self.layer(x)
+        return scores
 
-plt.title(str(iteration))
-plt.show(block=False)
-plt.pause(2)  # pause avec duree en secondes
+def error(scores, id_cat):
+    error_tot = 0
+    for i in range(len(scores)):
+        error_tot += torch.max(torch.FloatTensor([0,0,0]), scores[i] - scores[i][id_cat[i]])
+    return error_tot
+
+def error_with_d(scores, id_cat, d):
+    error_tot = 0
+    for i in range(len(scores)):
+        error_tot += torch.max(torch.FloatTensor([0,0,0]), scores[i] - scores[i][id_cat[i]] - d)
+    return error_tot
+
+iteration = 10
+
+model = Net()
+
+input = torch.FloatTensor([point[0] for point in points])
+ref = torch.LongTensor([point[1] for point in points])
+optimizer = torch.optim.SGD(model.parameters(), lr=0.5)
+
+for i in range(iteration):
+    optimizer.zero_grad()
+    scores = model(input)
+    err = error_with_d(scores, ref, 1)
+    tot_error = torch.sum(err)
+    tot_error.backward()
+    optimizer.step()
+
+    DessineFond()
+    DessinePoints()
+    print(f"Iteration : {i}, Error : {tot_error.item()}")
+    plt.title(str(iteration))
+    plt.show(block=False)
+    plt.pause(0.5)  # pause avec duree en secondes
 
