@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from   torchvision import datasets, transforms
 
+"""
 ####  1 couche Linear
 #	Qu1 : quel est le % de bonnes prédictions obtenu au lancement du programme , pourquoi ?
 #	Qu2 : quel est le % de bonnes prédictions obtenu avec 1 couche Linear ?
@@ -21,7 +22,7 @@ from   torchvision import datasets, transforms
 ####  Fonction Softmax
 #   Qu10 : pourquoi est il inutile de changer le code de la fonction TestOK ?
 
-
+"""
 
 
 class Net(nn.Module):

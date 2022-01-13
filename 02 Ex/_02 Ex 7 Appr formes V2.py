@@ -97,7 +97,7 @@ def error_with_d(scores, id_cat, d):
     return error_tot
 
 iterations = 2000
-neurones = 100
+neurones = 300
 model = Net(neurones)
 
 input = torch.FloatTensor([point[0] for point in points])
@@ -107,7 +107,7 @@ optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 for i in range(iterations+1):
    optimizer.zero_grad()
    scores = model(input)
-   err = error_with_d(scores, ref, 0.001)
+   err = error_with_d(scores, ref, 0.005)
    tot_error = torch.sum(err)
    tot_error.backward()
    optimizer.step()
