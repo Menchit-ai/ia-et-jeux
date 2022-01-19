@@ -17,7 +17,7 @@ On veut tester sur toute notre base de test et non pas seulement sur une partie 
 afin d'avoir la mesure la plus précise.
 
 #   Qu4 : pourquoi la couche Linear comporte-t-elle 784 entrées ?
-C'est le nombre de features à calculer le plus bas possible afin d'avoir un réseau performant.
+# C'est la taille du vecteur d'entrée (784 = 28*28 pour des images de taille 28x28)
 
 #   Qu5 : pourquoi la couche Linear comporte-t-elle 10 sorties ?
 Les images appartiennent à 10 classes distinctes.
@@ -28,6 +28,7 @@ La première a pour taille (784, 128) et la seconde a pour taille (128, 10).
 
 # 	Qu7 : quel est l’ordre de grandeur du nombre de poids utilisés dans ce réseau ?
 On a un ordre de grandeur de 10^6
+784*128 + 128*64 
 
 #	Qu8 : quel est le % de bonnes prédictions obtenu avec 2 couches Linear ?
 97%
