@@ -3,22 +3,18 @@ import torch.nn as nn
 import torch.nn.functional as F
 from   torchvision import datasets, transforms
 
-
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
         self.FC1 = nn.Conv2d(3, 32, kernel_size=(3,3), stride=(1,1))
-        self.FC2 = nn.Linear(32758, 10)
+        self.FC2 = nn.Linear(30*30*32, 10)
         self.criterion = nn.CrossEntropyLoss()
 
 
     def forward(self, x):
-        print(x.shape)
         x = self.FC1(x)
         x = F.relu(x)
-        x = self.MP2D(x)
-        x = torch.flatten(x)
-        print(x.shape)
+        x = torch.flatten(x, start_dim=1)
         x = self.FC2(x)
         return x
 
@@ -64,6 +60,7 @@ def TEST(model, test_loader):
             nbImages += data.shape[0]
 
     pc_success = 100. * nbOK / nbImages
+    test_acc.append(pc_success)
     print(f'\nTest set:   Accuracy: {nbOK}/{nbImages} ({pc_success:.2f}%)\n')
 
 ##############################################################################
@@ -81,12 +78,16 @@ def main(batch_size):
     optimizer = torch.optim.Adam(model.parameters(),lr=0.001)
 
     TEST(model,  test_loader)
-    for epoch in range(20):
+    for epoch in range(80):
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         print(f'Train Epoch: {epoch:3}')
 
         TRAIN(batch_size, model,  train_loader, optimizer, epoch)
         TEST(model,  test_loader)
 
-
+test_acc = []
 main(batch_size = 64)
+
+with open("res1_acc.txt", "w") as f:
+    for value in test_acc: 
+        f.write(str(value)+"\n")

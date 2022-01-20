@@ -62,6 +62,7 @@ def TEST(model, test_loader):
             nbImages += data.shape[0]
 
     pc_success = 100. * nbOK / nbImages
+    test_acc.append(pc_success)
     print(f'\nTest set:   Accuracy: {nbOK}/{nbImages} ({pc_success:.2f}%)\n')
 
 ##############################################################################
@@ -79,7 +80,7 @@ def main(batch_size):
     optimizer = torch.optim.Adam(model.parameters(),lr=0.001)
 
     TEST(model,  test_loader)
-    for epoch in range(20):
+    for epoch in range(80):
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         print(f'Train Epoch: {epoch:3}')
 
@@ -87,4 +88,9 @@ def main(batch_size):
         TEST(model,  test_loader)
 
 
+test_acc = []
 main(batch_size = 64)
+
+with open("res0_acc.txt", "w") as f:
+    for value in test_acc: 
+        f.write(str(value)+"\n")
